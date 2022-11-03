@@ -99,15 +99,28 @@
     let input_list = [];
     function save_input(val) {
       let tag = $(val).val();
-      input_list.push(tag);
+      if (!input_list.includes(tag)) {
+        input_list.push(tag);
+      } else {
+        alert('이미 포함된 검색어입니다')
+      }
       console.log(input_list);
       $("#input").val(input_list);
     }
 
     function search() {
-      let search_list = $("#input").val();
-      console.log(search_list);
-      sessionStorage.setItem("tag_list", search_list);
+      if (input_list.length >= 2) {
+        let search_list = $("#input").val();
+        console.log(search_list);
+        sessionStorage.setItem("tag_list", search_list);
+        location.href = '/tg';
+      } else {
+        alert('검색어를 2개 이상 선택하세요')
+      }
+    }
+
+    function reset() {
+      $("#input").val('')
     }
   </script>
 </head>
@@ -169,12 +182,13 @@
   </div>
 
   <div class="search_input">
-    <input id="input" placeholder="검색어를 선택해주세요." />
-    <a href="/tg">
-      <button onclick="search()" type="button" class="btn btn-secondary">
-        검색
-      </button>
-    </a>
+    <input id="input" placeholder="검색어를 2개 이상 선택해주세요." />
+    <button onclick="reset()" type="button" class="btn btn-secondary">
+      초기화
+    </button>
+    <button onclick="search()" type="button" class="btn btn-secondary">
+      검색
+    </button>
   </div>
 </body>
 

@@ -94,9 +94,9 @@
                         if (difference.length >= 2) {
                             temp_html = `<div class="card">
                                             <div class="card-body">
-                                               <a onclick="go()" href="/sy" alt="${city_kor}" id="gogo">
+                                               <a onclick="go()" href="/${city_kor}" alt="${city_kor}" id="gogo">
                                                <h3 class="card-name">${city_kor}</h3>
-                                               <h5 class="card-name"><a href="/sy">${city_eng}</h5></a>
+                                               <h5 class="card-name"><a href="/${city_kor}">${city_eng}</h5></a>
                                                         <h5 class="card-nations">${country}</h5>
                                                 <i class="card-desc">${desc}</i>
                                                 <div class="card-kewords-group">
@@ -136,7 +136,7 @@
                 }
             })
         };
-        function go(){
+        function go() {
             let b = $('#gogo').val()
             sessionStorage.setItem("city_list", b)
             console.log(b)
