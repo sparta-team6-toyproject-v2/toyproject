@@ -12,14 +12,12 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
 
-    <title>허니문 추천</title>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <title>여행지 정보</title>
 </head>
 <style>
-    * {
-        font-family: 'Noto Sans KR', sans-serif;
+    .btn{
+        margin: 10px 0 0 10px;
     }
-
     .main_title {
         background-image: url('https://search.pstatic.net/common?src=https://dbscthumb-phinf.pstatic.net/5885_000_14/20211005191629685_0FLZ7LRKD.jpg/fb437_3_i1.jpg?type=w540_fst&type=f520_288_travelsearch');
         background-position: center;
@@ -27,15 +25,23 @@
 
         color: white;
 
-        padding: 10px 10px 10px 10px;
+        padding: 10px 10px 50px 10px;
     }
 
     .main_img {
-        width: 300px;
-        margin: 20px 0 0 10px;
+        width: 365px;
+        margin: 30px 0 0 10px;
+
     }
 
-    .card-group {}
+    .weather_box {
+        background-image: url('https://search.pstatic.net/common?src=https://dbscthumb-phinf.pstatic.net/5885_000_14/20211005191629685_0FLZ7LRKD.jpg/fb437_3_i1.jpg?type=w540_fst&type=f520_288_travelsearch');
+        background-position: center;
+        background-size: cover;
+
+        color: white;
+        padding: 0px 10px 0px 10px;
+    }
 
     h2 {
         margin-top: 10px;
@@ -43,7 +49,7 @@
     }
 
     .card {
-        margin: 10px 10px 10px 10px;
+        margin: 10px 10px 20px 10px;
 
         /*background-color: red;*/
     }
@@ -54,18 +60,31 @@
         padding: 20px 10px 10px 15px;
     }
 
-    .prac {
-        display: inline-block;
-        width: 300px;
-        border: 1px solid;
-    }
 </style>
 <script>
     let exam = "보라카이"
-    console.log(exam)
     $(document).ready(function () {
         show_main();
+        q1()
     });
+
+    function q1() {
+            $.ajax({
+                type: "GET",
+                url: "https://api.openweathermap.org/data/2.5/weather?lat=11.9477338&lon=121.9392632&appid=6d966a5b73a9a497eb9607804b19ede8",
+                data: {},
+                success: function(response){
+                    let weather = response['weather'][0]['main']
+                    let temp = response['main']['temp']-273
+                    let temp_new = temp.toFixed(2)
+                    let temp_html =`<h4>Weather: ${weather}</h4>
+                                    <h4>Temperature: ${temp_new}°C</h4>`
+
+                    $('#weather').append(temp_html)
+
+                    }
+                })
+        }
 
     function show_main() {
         $.ajax({
@@ -94,20 +113,20 @@
                     let img_url = rows[i]['img_url']
 
                     if (exam == rows[i]['city_kor']) {
-                        let temp_html = `<div className = "card" class="main_img">
-                                            <img src = "${img_url[0]}" className = "card-img-top" alt = "메인이미지1" >
+                        let temp_html = `<div className = "card">
+                                            <img class="main_img" src = "${img_url[0]}" className = "card-img-top" alt = "메인이미지1" >
                                          </div>
-                                         <div className = "card" class="main_img">
-                                            <img src = "${img_url[1]}" className = "card-img-top" alt = "메인이미지2" >
+                                         <div className = "card">
+                                            <img class="main_img" src = "${img_url[1]}" className = "card-img-top" alt = "메인이미지2" >
                                          </div>
-                                         <div className = "card" class="main_img">
-                                            <img src = "${img_url[2]}" className = "card-img-top" alt = "메인이미지3" >
+                                         <div className = "card">
+                                            <img class="main_img" src = "${img_url[2]}" className = "card-img-top" alt = "메인이미지3" >
                                          </div>
-                                         <div className = "card" class="main_img">
-                                            <img src = "${img_url[3]}" className = "card-img-top" alt = "메인이미지4" >
+                                         <div className = "card">
+                                            <img  class="main_img" src = "${img_url[3]}" className = "card-img-top" alt = "메인이미지4" >
                                          </div>
-                                         <div className = "card" class="main_img">
-                                            <img src = "${img_url[4]}" className = "card-img-top" alt = "메인이미지5" >
+                                         <div className = "card">
+                                            <img class="main_img" src = "${img_url[4]}" className = "card-img-top" alt = "메인이미지5" >
                                          </div>`
                         $('#main_img').append(temp_html)
                     }
@@ -247,9 +266,12 @@
                         $('#mall').append(temp_html)
                     }
                 }
+
             }
         })
     }
+
+
 </script>
 
 <body>
@@ -262,11 +284,12 @@
 
         </div>
         <div class="card">
-            <h5 class="card-title">현재날씨</h5>
-            <img src="..." class="card-img-top" alt="날씨, 기온">
-            <div class="card-body">
-                <p class="card-text"></p>
-                <p class="card-text"><small class="text-muted"></small></p>
+            <div class="weather_box">
+                <h2 class="card-title">Today's Weather</h2>
+                <div class="card-body">
+                    <p class="card-text" id="weather"></p>
+                    <p class="card-text"><small class="text-muted"></small></p>
+                </div>
             </div>
         </div>
     </div>
@@ -281,34 +304,21 @@
         <h2 class="head2">관광명소</h2>
     </div>
     <div class="card-group" id="site">
-
     </div>
 
     <!--맛집-->
     <h2 class="head2">맛집</h2>
     <div class="card-group" id="rest">
-
     </div>
 
     <!--기념품-->
     <h2 class="head2">기념품</h2>
     <div class="card-group" id="mall">
         <div>
-
         </div>
-
     </div>
 
-    <!--<ul class="prac">-->
 
-    <!--            <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" />-->
-    <!--            <a>첫번째 구글 이미지</a>-->
-    <!--</ul>-->
-    <!--<ul class="prac">-->
-    <!--            <img src="https://www.google.com/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" />-->
-    <!--            <a>두번째 구글 이미지</a>-->
-
-    </ul>
 </body>
 
 </html>
