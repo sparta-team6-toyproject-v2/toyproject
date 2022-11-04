@@ -13,11 +13,17 @@
         crossorigin="anonymous"></script>
 
     <title>여행지 정보</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
 </head>
 <style>
-    .btn{
+    * {
+        font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    .btn {
         margin: 10px 0 0 10px;
     }
+
     .main_title {
         background-image: url('https://search.pstatic.net/common?src=https://dbscthumb-phinf.pstatic.net/5885_000_14/20211005191629685_0FLZ7LRKD.jpg/fb437_3_i1.jpg?type=w540_fst&type=f520_288_travelsearch');
         background-position: center;
@@ -59,7 +65,6 @@
     .head2 {
         padding: 20px 10px 10px 15px;
     }
-
 </style>
 <script>
     let exam = "마드리드"
@@ -69,22 +74,22 @@
     });
 
     function q1() {
-            $.ajax({
-                type: "GET",
-                url: "https://api.openweathermap.org/data/2.5/weather?lat=40.4167047&lon=-3.7035825&appid=6d966a5b73a9a497eb9607804b19ede8",
-                data: {},
-                success: function(response){
-                    let weather = response['weather'][0]['main']
-                    let temp = response['main']['temp']-273
-                    let temp_new = temp.toFixed(2)
-                    let temp_html =`<h4>Weather: ${weather}</h4>
+        $.ajax({
+            type: "GET",
+            url: "https://api.openweathermap.org/data/2.5/weather?lat=40.4167047&lon=-3.7035825&appid=6d966a5b73a9a497eb9607804b19ede8",
+            data: {},
+            success: function (response) {
+                let weather = response['weather'][0]['main']
+                let temp = response['main']['temp'] - 273
+                let temp_new = temp.toFixed(2)
+                let temp_html = `<h4>Weather: ${weather}</h4>
                                     <h4>Temperature: ${temp_new}°C</h4>`
 
-                    $('#weather').append(temp_html)
+                $('#weather').append(temp_html)
 
-                    }
-                })
-        }
+            }
+        })
+    }
 
     function show_main() {
         $.ajax({
